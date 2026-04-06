@@ -187,6 +187,9 @@ export class ConvexClient {
     args: FunctionArgs<Query>,
     callback: (result: FunctionReturnType<Query>) => unknown,
     onError?: (e: Error) => unknown,
+    options?: {
+      skipInitialResult?: boolean;
+    },
   ): Unsubscribe<Query["_returnType"]> {
     if (this.disabled) {
       return this.createDisabledUnsubscribe<Query["_returnType"]>();
@@ -216,7 +219,8 @@ export class ConvexClient {
     // a new server update (which could take seconds or days).
     if (
       this.queryResultReady(queryToken) &&
-      this.callNewListenersWithCurrentValuesTimer === undefined
+      this.callNewListenersWithCurrentValuesTimer === undefined &&
+      !options?.skipInitialResult
     ) {
       this.callNewListenersWithCurrentValuesTimer = setTimeout(
         () => this.callNewListenersWithCurrentValues(),
