@@ -179,6 +179,10 @@ export class ConvexClient {
    * @param callback - Function to call when the query result updates.
    * @param onError - Function to call when the query result updates with an error.
    * If not provided, errors will be thrown instead of calling the callback.
+   * @param options - Options for the query.
+   * @param options.skipInitialResult - When true the callback is not run with the query result that is already in
+   * the client's local cache when the subscription is registered. The callback
+   * runs only after a later update (from the server or from optimistic updates).
    *
    * @return an {@link Unsubscribe} function to stop calling the onUpdate function.
    */
